@@ -18,6 +18,7 @@ export const CRAGS: Crag[] = [
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'N',
     seepageFactor: 1.3,
+    boolderSlug: 'cuvier',
     notes: 'Historic crag, very short walk-in but polished and slow to dry.',
   },
   {
@@ -36,6 +37,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'mixed',
+    boolderSlug: 'apremont',
     notes: 'Huge sector, dries fast in sunny areas.',
   },
   {
@@ -67,6 +69,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'medium' },
     aspect: 'mixed',
+    boolderSlug: 'rocher-canon',
     notes: 'Flat, family-friendly, lots of easy lines.',
   },
   {
@@ -87,6 +90,7 @@ export const CRAGS: Crag[] = [
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'mixed',
     seepageFactor: 1.1,
+    boolderSlug: 'franchard-isatis',
     notes: 'Classic intermediate sector.',
   },
   {
@@ -105,6 +109,7 @@ export const CRAGS: Crag[] = [
     shade: 'shaded',
     parking: { type: 'lot', capacity: 'medium' },
     aspect: 'mixed',
+    boolderSlug: 'franchard-cuisiniere',
     notes: 'Quieter than Isatis, good easy lines.',
   },
   {
@@ -123,6 +128,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'medium' },
     aspect: 'mixed',
+    boolderSlug: 'cul-de-chien',
     notes: 'Sandy clearings, kids love it.',
   },
   {
@@ -141,6 +147,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'roadside', capacity: 'medium' },
     aspect: 'mixed',
+    boolderSlug: '91-1',
     notes: 'Pleasant 3 Pignons sector with full range of easy circuits.',
   },
   {
@@ -159,6 +166,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'roadside', capacity: 'medium' },
     aspect: 'mixed',
+    boolderSlug: '95-2',
     notes: 'Harder sector, scattered blocks.',
   },
   {
@@ -178,6 +186,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'mixed',
+    boolderSlug: 'roche-aux-sabots',
     notes: 'One of the best family crags — dedicated children’s circuit.',
   },
   {
@@ -197,6 +206,7 @@ export const CRAGS: Crag[] = [
     parking: { type: 'roadside', capacity: 'small' },
     aspect: 'N',
     seepageFactor: 1.2,
+    boolderSlug: 'gorge-aux-chats',
     notes: 'Sheltered, can stay wet.',
   },
   {
@@ -216,6 +226,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'mixed',
+    boolderSlug: 'buthiers-canard',
     notes: 'Closest major area to Boulancourt.',
   },
   {
@@ -235,6 +246,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'mixed',
+    boolderSlug: 'buthiers-piscine',
     notes: 'Excellent family crag near the pool, dedicated children’s circuit, very close to Boulancourt.',
   },
   {
@@ -253,6 +265,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'large' },
     aspect: 'S',
+    boolderSlug: 'elephant',
     notes: 'Sunny, dries quickly, beautiful big blocks.',
   },
   {
@@ -271,6 +284,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'roadside', capacity: 'small' },
     aspect: 'mixed',
+    boolderSlug: 'ja-martin',
     notes: '3 Pignons classic with easy circuits.',
   },
   {
@@ -289,6 +303,7 @@ export const CRAGS: Crag[] = [
     shade: 'mixed',
     parking: { type: 'lot', capacity: 'medium' },
     aspect: 'mixed',
+    boolderSlug: 'dame-jouanne',
     notes: 'Big, atmospheric — closer to Boulancourt but rougher approach.',
   },
 ];

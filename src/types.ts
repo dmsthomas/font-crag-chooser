@@ -29,6 +29,7 @@ export interface Crag {
   };
   aspect?: 'N' | 'S' | 'E' | 'W' | 'mixed';
   seepageFactor?: number;
+  boolderSlug?: string;
   notes?: string;
 }
 
