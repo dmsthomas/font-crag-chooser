@@ -7,8 +7,10 @@ import { ScoreBreakdown } from '../components/ScoreBreakdown';
 import { DaySelector } from '../components/DaySelector';
 import { WeatherBadge } from '../components/WeatherBadge';
 import { DryRockIndicator } from '../components/DryRockIndicator';
+import { RainForecast } from '../components/RainForecast';
 import { driveMinutesFromCampsite } from '../lib/driveTime';
 import { loadPrefs } from '../lib/storage';
+import { rainWindows } from '../lib/rainWindows';
 import type { DayChoice } from '../types';
 
 function defaultDay(): DayChoice {
@@ -31,6 +33,8 @@ const CIRCUIT_LABEL: Record<string, string> = {
   red: '🔴 Red',
   black: '⚫ Black',
 };
+
+const RAIN_THRESHOLD = 0.2;
 
 export function CragDetail() {
   const { id } = useParams<{ id: string }>();
@@ -61,6 +65,14 @@ export function CragDetail() {
   const dayWeather = forecast?.days.find((d) => d.date === targetIso);
   const drive = Math.round(driveMinutesFromCampsite(crag.coords));
 
+  const windows = forecast
+    ? rainWindows(
+        forecast.hourly,
+        targetIso,
+        day === 'today' ? Date.now() : null,
+      )
+    : [];
+
   const hourly = forecast?.hourly;
   const climbHours = hourly
     ? hourly.time
@@ -90,22 +102,40 @@ export function CragDetail() {
       </header>
 
       <main className="max-w-screen-sm mx-auto px-4 py-4 space-y-4">
-        <section className="bg-white rounded-xl border border-gray-200 p-4 space-y-2">
+        <section className="bg-white rounded-xl border border-gray-200 p-4 space-y-3">
           <div className="flex items-center justify-between text-sm">
             <WeatherBadge day={dayWeather} />
-            {forecast && (
-              <DryRockIndicator
-                recentRain48hMm={forecast.recentRain48hMm}
-                dryHours={forecast.dryHours}
-              />
-            )}
+            <span className="text-xs text-gray-500">
+              🚗 {drive} min · 🥾 {crag.walkInMinutes} min
+            </span>
           </div>
-          <div className="text-xs text-gray-600 space-y-1">
-            <div>🚗 {drive} min drive from camp · 🥾 {crag.walkInMinutes} min walk-in ({crag.approach})</div>
-            <div>🅿️ {crag.parking.type}, {crag.parking.capacity} · Shade: {crag.shade}</div>
+          {forecast && (
+            <>
+              <div>
+                <div className="text-[11px] uppercase tracking-wide text-gray-500 mb-1">
+                  Rock condition
+                </div>
+                <DryRockIndicator
+                  recentRain48hMm={forecast.recentRain48hMm}
+                  dryHours={forecast.dryHours}
+                  verbose
+                />
+              </div>
+              <div>
+                <div className="text-[11px] uppercase tracking-wide text-gray-500 mb-1">
+                  Rain {day === 'today' ? 'rest of today' : 'tomorrow'}
+                </div>
+                <RainForecast windows={windows} />
+              </div>
+            </>
+          )}
+          <div className="text-xs text-gray-600 space-y-1 pt-1 border-t border-gray-100">
+            <div>
+              Approach: {crag.approach} · 🅿️ {crag.parking.type}, {crag.parking.capacity} · Shade: {crag.shade}
+            </div>
             {crag.notes && <div className="italic">{crag.notes}</div>}
           </div>
-          <div className="flex flex-wrap gap-1 pt-1">
+          <div className="flex flex-wrap gap-1">
             {crag.circuits.map((c) => (
               <span
                 key={c.color}
@@ -136,20 +166,29 @@ export function CragDetail() {
                   </tr>
                 </thead>
                 <tbody>
-                  {climbHours.map((h) => (
-                    <tr key={h.t} className="border-t border-gray-100">
-                      <td className="py-1 pr-3 tabular-nums">{h.t.slice(11, 16)}</td>
-                      <td className="py-1 pr-3 tabular-nums">
-                        {hourly.temperature_2m[h.i]?.toFixed(0)}
-                      </td>
-                      <td className="py-1 pr-3 tabular-nums">
-                        {hourly.precipitation[h.i]?.toFixed(1)}
-                      </td>
-                      <td className="py-1 tabular-nums">
-                        {hourly.windspeed_10m[h.i]?.toFixed(0)}
-                      </td>
-                    </tr>
-                  ))}
+                  {climbHours.map((h) => {
+                    const mm = hourly.precipitation[h.i] ?? 0;
+                    const wet = mm >= RAIN_THRESHOLD;
+                    return (
+                      <tr
+                        key={h.t}
+                        className={`border-t border-gray-100 ${wet ? 'bg-blue-50' : ''}`}
+                      >
+                        <td className="py-1 pr-3 tabular-nums">{h.t.slice(11, 16)}</td>
+                        <td className="py-1 pr-3 tabular-nums">
+                          {hourly.temperature_2m[h.i]?.toFixed(0)}
+                        </td>
+                        <td
+                          className={`py-1 pr-3 tabular-nums ${wet ? 'text-blue-800 font-medium' : ''}`}
+                        >
+                          {mm.toFixed(1)}
+                        </td>
+                        <td className="py-1 tabular-nums">
+                          {hourly.windspeed_10m[h.i]?.toFixed(0)}
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
