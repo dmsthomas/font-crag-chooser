@@ -195,14 +195,35 @@ export function CragDetail() {
           </section>
         )}
 
-        <a
-          href={mapsLink}
-          target="_blank"
-          rel="noreferrer"
-          className="block text-center bg-gray-900 text-white py-3 rounded-xl font-medium"
-        >
-          Open in Google Maps
-        </a>
+        <div className="grid grid-cols-2 gap-2">
+          <a
+            href={mapsLink}
+            target="_blank"
+            rel="noreferrer"
+            className="block text-center bg-gray-900 text-white py-3 rounded-xl font-medium"
+          >
+            Google Maps
+          </a>
+          {crag.boolderSlug ? (
+            <a
+              href={`https://www.boolder.com/en/fontainebleau/${crag.boolderSlug}`}
+              target="_blank"
+              rel="noreferrer"
+              className="block text-center bg-orange-500 text-white py-3 rounded-xl font-medium"
+            >
+              Boolder
+            </a>
+          ) : (
+            <a
+              href={`https://www.boolder.com/en/fontainebleau`}
+              target="_blank"
+              rel="noreferrer"
+              className="block text-center bg-orange-500/70 text-white py-3 rounded-xl font-medium"
+            >
+              Boolder
+            </a>
+          )}
+        </div>
       </main>
     </div>
   );
