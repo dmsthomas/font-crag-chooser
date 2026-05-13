@@ -3,6 +3,7 @@ import type { Crag, Forecast, ScoreBreakdown, DayChoice } from '../types';
 import { WeatherBadge } from './WeatherBadge';
 import { DryRockIndicator } from './DryRockIndicator';
 import { RainForecast } from './RainForecast';
+import { CircuitDots } from './CircuitDots';
 import { driveMinutesFromCampsite } from '../lib/driveTime';
 import { rainWindows } from '../lib/rainWindows';
 
@@ -30,7 +31,6 @@ export function CragCard({ crag, forecast, breakdown, day }: Props) {
   const targetIso = targetIsoFor(day);
   const wxDay = forecast?.days.find((d) => d.date === targetIso);
   const drive = Math.round(driveMinutesFromCampsite(crag.coords));
-  const hasEnfants = crag.circuits.some((c) => c.color === 'enfants');
   const windows = forecast
     ? rainWindows(
         forecast.hourly,
@@ -47,13 +47,9 @@ export function CragCard({ crag, forecast, breakdown, day }: Props) {
       <div className="p-4 space-y-2">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-semibold truncate">{crag.name}</h2>
-              {hasEnfants && (
-                <span className="text-xs bg-pink-100 text-pink-700 px-1.5 py-0.5 rounded">
-                  👶 enfants
-                </span>
-              )}
+            <h2 className="text-base font-semibold truncate">{crag.name}</h2>
+            <div className="mt-1">
+              <CircuitDots circuits={crag.circuits} />
             </div>
             <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-gray-600">
               <span>🚗 {drive} min</span>
